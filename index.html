@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Foodistan</title>
+    <style>
+        body {
+            background-color: #ffefd5;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #ffa07a;
+            padding: 10px;
+            text-align: center;
+        }
+        header a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+        }
+        .recipe {
+            display: flex;
+            margin: 20px;
+        }
+        .recipe img {
+            width: 200px;
+            height: 200px;
+            margin-right: 20px;
+        }
+        footer {
+            background-color: #ffa07a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        form {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#">Home</a>
+        <a href="#">Menu</a>
+        <a href="#">About</a>
+    </header>
+    <div class="recipe">
+        <img src="recipe.jpg" alt="Recipe Image">
+        <div>
+            <h2>Recipe Name</h2>
+            <p>Recipe description...</p>
+        </div>
+    </div>
+    <form onsubmit="event.preventDefault(); alert('Form submitted!')">
+        <h2>Form Header</h2>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <label for="email">Your Email</label>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <input type="submit" value="Submit">
+    </form>
+    <footer>
+        &copy; 2022 Foodistan
+    </footer>
+    <script>
+        const recipes = [
+            { id: 1, title: "Chicken Tikka Masala", description: "Roasted marinated chicken in a spiced curry sauce.", price: "$15", img: "https://littlesunnykitchen.com/wp-content/uploads/Chicke-tikka-masala-2-7.jpg" },
+            { id: 2, title: "Palak Paneer", description: "Spinach and paneer in a thick curry sauce based on pureed spinach.", price: "$12", img: "https://minimalistbaker.com/wp-content/uploads/2018/10/Vegan-Palak-Paneer-SQUARE.jpg" },
+            { id: 3, title: "Biryani", description: "Fragrant Indian rice dish with pieces of chicken, cooked with saffron and spices.", price: "$18", img: "https://assets.limetray.com/assets/user_images/menus/compressed/1636789829_Tandoorichickennew.jpg" },
+            { id: 4, title: "Chole Bhature", description: "Combination of spicy chickpeas and deep-fried bread called Bhature.", price: "$10", img: "https://thumbs.dreamstime.com/b/chole-bhature-dark-background-served-laccha-onions-pickle-buttermilk-restaurant-style-304060489.jpg" }
+        ];
+        
+        
+            function addRecipesToMenu() {
+                const menuSection = document.getElementById('menu');
+                menuSection.innerHTML = ''; // Clear existing content
+                recipes.forEach(recipe => {
+                    const recipeDiv = document.createElement('div');
+                    recipeDiv.className = 'recipe';
+                    recipeDiv.innerHTML = `
+                        <img src="${recipe.img}" alt="${recipe.title}">
+                        <h3>${recipe.title}</h3>
+                        <p>${recipe.description}</p>
+                        <div class="price">${recipe.price}</div>
+                        <button onclick="viewIngredients(${recipe.id})">View Ingredients</button>
+                        <button onclick="orderRecipe(${recipe.id})">Order Now</button>
+                    `;
+                    menuSection.appendChild(recipeDiv);
+                });
+            }
+        
+            function viewIngredients(recipeId) {
+                alert('Ingredients for ' + recipes.find(r => r.id === recipeId).title);
+            }
+        
+            function orderRecipe(recipeId) {
+                alert('Ordering ' + recipes.find(r => r.id === recipeId).title);
+            }
+        
+            function showHome() {
+                document.getElementById('homePage').style.display = 'block';
+                document.getElementById('menu').style.display = 'none';
+            }
+        
+            function showMenu() {
+                document.getElementById('homePage').style.display = 'none';
+                document.getElementById('menu').style.display = 'block';
+                addRecipesToMenu(); // Ensure menu is updated each time it's viewed
+            }
+        
+            window.onload = showHome; // Show home page on initial load
+        </script>
+</body>
+</html>
